@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบทดสอบคณิตศาสตร์</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo-container img {
+            max-width: 120px;
+            height: auto;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .user-info {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .user-info input[type="text"] {
+            padding: 8px;
+            margin-top: 5px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #e9e9e9;
+            border-radius: 5px;
+        }
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .options label {
+            display: block;
+            margin: 5px 0;
+            padding: 8px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .options label:hover {
+            background-color: #f0f0f0;
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+        .result-message {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .correct {
+            color: #28a745;
+        }
+        .incorrect {
+            color: #dc3545;
+        }
+        .correct-answer-display {
+            font-weight: normal;
+            font-style: italic;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .summary {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #eee;
+            border-radius: 8px;
+            text-align: center;
+        }
+    </style>
+    <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+
+        const questions = [
+           { id: "q1", text: "กำหนดให้ลำดับ \\((a_n)\\) มี \\(a_1=3\\) และมีความสัมพันธ์เวียนเกิด \\(a_n=a_{n-1}+n\\) สำหรับทุก \\(n\\ge 2\\) จงหาค่าของ \\(a_4\\)", answer: "12" },
+            { id: "q2", text: "กำหนดให้ \\(a_1,a_2,a_3,...\\) เป็นลำดับเลขคณิต ถ้า \\(a_1+a_5+a_9+a_{13}=220\\) แล้ว \\(a_1+a_7+a_{13}\\) มีค่าเท่าใด ", answer: "165" },
+            { id: "q3", text: "กำหนดให้ \\(a_n\\) เป็นลำดับเรขาคณิตของจำนวนจิงบวก ซึ่งมี \\(a_2+a_3+a_4+a_5=\\frac{5}{8}\\)และ \\(a_4+a_5+a_6+a_7=\\frac{5}{32}\\) แล้วข้อใดคือค่าของ \\(a_2\\) ", options: [{ text: "\\(\\frac{1}{2}\\)", isCorrect: false }, { text: "\\(\\frac{2}{3}\\)", isCorrect: false }, { text: "\\(\\frac{3}{4}\\)", isCorrect: false }, { text: "\\(\\frac{1}{3}\\)", isCorrect: true }] },
+              { id: "q4", text: "ถ้า \\(9,x,y,243\\) เป็น \\(4\\) พจน์เรียงกันในลำดับเรขาคณิต จงหาค่าของ \\(\\displaystyle\\frac{y+x}{2}\\)",answer: "54" },
+
+            { id: "q5", text: "จงหาค่าของ \\(\\displaystyle\\lim_{n \\to \\infty} \\frac{21n-5-\\sqrt{4n^2-7n}}{\\sqrt[3]{8n^3+2n}+3n} + \\lim_{n \\to \\infty}\\frac{\\sqrt{4n+3}}{\\sqrt{n+5 +\\sqrt{n+3}}}\\)", options: [{ text: "\\(\\frac{22}{5}\\)", isCorrect: false }, { text: "\\(\\frac{24}{5}\\)", isCorrect: false }, { text: "\\(\\frac{26}{5}\\)", isCorrect: false }, { text: "\\(\\frac{29}{5}\\)", isCorrect: true }] },
+            { id: "q6", text: "จงหาค่าของ \\(\\displaystyle\\lim_{n \\to \\infty} 3^{-n} \\cdot \\frac{n^3+2}{2n+5} + \\frac{9^n+(-5)^{n+1}}{4^{n-1}-4^{2n-3}}\\)",answer: "0" },
+
+            { id: "q7", text: "จงหาค่าของ \\(\\displaystyle\\lim_{n \\to \\infty} \\left(\\frac{n^3}{n^2+2}-\\frac{n^2}{n+3}\\right)\\)",answer: "3" },
+
+{ id: "q8", text: "จงหาค่าของ \\(\\displaystyle\\lim_{n \\to \\infty} \\left(\\sqrt{4n^{2}+5n+6}-2n\\right)\\)", options: [{ text: "\\(\\frac{5}{4}\\)", isCorrect: true }, { text: "\\(\\frac{5}{6}\\)", isCorrect: false }, { text: "\\(\\frac{1}{3}\\)", isCorrect: false }, { text: "\\(\\frac{7}{6}\\)", isCorrect: false }] },
+
+{ id: "q9", text: "กำหนดให้ \\(\\displaystyle a_{n}=\\frac{n^{2}-2}{5^{n-3}}\\) เมื่อ \\(n=1,2,3,..\\) จงหา \\(\\displaystyle\\lim_{n \\to \\infty} \\frac{a_{n+1}}{a_{n}}\\) ", options: [{ text: "\\(\\frac{1}{6}\\)", isCorrect: false }, { text: "\\(\\frac{1}{5}\\)", isCorrect: true }, { text: "\\(\\frac{1}{4}\\)", isCorrect: false }, { text: "\\(\\frac{1}{3}\\)", isCorrect: false }] },
+
+            { id: "q10", text: "จงหาค่าของ \\(\\displaystyle\\lim_{n \\to \\infty} \\left(\\sqrt{\\log_5\\frac{625n^{3}-n}{n^{2}-8+n^{3}}}\\right)\\)",options: [{ text: "\\(\\frac{1}{5}\\)", isCorrect: false }, { text: "\\(2\\)", isCorrect: true }, { text: "\\(4\\)", isCorrect: false }, { text: "\\(5\\)", isCorrect: false }] },
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const quizContainer = document.getElementById('quiz-container');
+            const summaryContainer = document.getElementById('quiz-summary');
+            
+            const userInfoDiv = document.createElement('div');
+            userInfoDiv.className = 'user-info';
+            userInfoDiv.innerHTML = `
+                <h3>รายวิชาคณิตศาสตร์เพิ่มเติม 5 </h3>
+                <label for="name">ชื่อ-นามสกุล:</label>
+                <input type="text" id="name" name="name" placeholder="กรอกชื่อ-นามสกุล">
+            `;
+            quizContainer.before(userInfoDiv);
+
+            questions.forEach(q => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.id = q.id;
+                
+                const questionTextDiv = document.createElement('div');
+                questionTextDiv.className = 'question-text';
+                questionTextDiv.innerHTML = `ข้อที่ ${q.id.substring(1)}. ${q.text}`;
+                questionDiv.appendChild(questionTextDiv);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+
+                if (q.options) {
+                    q.options.forEach((option, index) => {
+                        const label = document.createElement('label');
+                        label.innerHTML = `<input type="radio" name="${q.id}" value="${index}" id="${q.id}-opt-${index}"> <span class="math-option">${option.text}</span>`;
+                        optionsDiv.appendChild(label);
+                    });
+                } else if (q.answer) {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.name = q.id;
+                    input.placeholder = 'กรอกคำตอบของคุณ';
+                    optionsDiv.appendChild(input);
+                }
+
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById('submit-button').addEventListener('click', () => {
+                const userName = document.getElementById('name').value.trim();
+                if (!userName) {
+                    alert('กรุณากรอกชื่อ-นามสกุล');
+                    return;
+                }
+
+                let score = 0;
+                questions.forEach(q => {
+                    let userAnswer = '';
+                    let isCorrect = false;
+
+                    if (q.options) {
+                        const selectedOption = document.querySelector(`input[name="${q.id}"]:checked`);
+                        if (selectedOption) {
+                            const selectedIndex = parseInt(selectedOption.value);
+                            userAnswer = q.options[selectedIndex].text;
+                            if (q.options[selectedIndex].isCorrect) {
+                                score++;
+                                isCorrect = true;
+                            }
+                        }
+                    } else if (q.answer) {
+                        userAnswer = document.querySelector(`input[name="${q.id}"]`).value.trim();
+                        if (userAnswer === q.answer) {
+                            score++;
+                            isCorrect = true;
+                        }
+                    }
+                });
+
+                const totalQuestions = questions.length;
+                summaryContainer.innerHTML = `<h2>ผลการทดสอบของ ${userName}</h2>
+                                             <h2>คะแนนที่ได้ทั้งหมด: ${score} / ${totalQuestions}</h2>`;
+                
+                // ส่งข้อมูลไปยัง Google Apps Script
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbwepE2fQLNGw7WXDXZvBagp5ML_IbEYjIqHOGHA_YNwisclkGLmTafPJY9vKvcRH6kS/exec';
+                
+                fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: userName,
+                        score: score,
+                        total: totalQuestions,
+                        answers: []
+                    })
+                })
+                .then(response => {
+                    console.log('ข้อมูลถูกส่งไปยัง Google Sheet แล้ว!');
+                })
+                .catch(error => {
+                    console.error('เกิดข้อผิดพลาดในการส่งข้อมูล:', error);
+                });
+
+                MathJax.typesetPromise();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="https://i.postimg.cc/Y9Fs6wJb/2.png" alt="Department of Mathematics Logo">
+        </div>
+        <h1>แบบฝึกทักษะสำหรับซ่อมสอบเก็บคะแนนครั้งที่ 1</h1>
+        <div id="quiz-container"></div>
+        <button id="submit-button">ส่งคำตอบ</button>
+        <div id="quiz-summary"></div>
+    </div>
+</body>
+</html>
